@@ -154,9 +154,10 @@ function log(t) {
 }
 
 data = JSON.parse(fs.readFileSync('./db.json', {encoding:'utf8', flag:'r'}));
-let interviewees = 50
+let interviewees = 100
 let rounds = 10000
 let config = `${interviewees};${rounds}`
+let max = null
 for (let algo of algs) {
   if (data[algo.name] == undefined) {
     data[algo.name] = {
@@ -174,5 +175,12 @@ for (let algo of algs) {
   } else {
     log(`${alg.name} cached success rate of ${alg.datasets[config]*100}%`)
   }
+
+  if (max == null || max.datasets[config] < alg.datasets[config]){
+    max = alg
+  }
 }
+
+console.log(`\n-------------\nBest Algorithm: ${max.name}\nSuccess Rate: ${max.datasets[config]}\n-------------\n`)
+
 fs.writeFileSync("./db.json", JSON.stringify(data, null, 4))
