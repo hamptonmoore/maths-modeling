@@ -121,7 +121,20 @@ let algs = [
     name: "using first n/4 search where zscore > 1.6",
     func: zscore_generator(4, 1.6)
   },
+  {
+    name: "using first n/10 search where zscore > 2",
+    func: zscore_generator(10, 2)
+  },
 ];
+
+// algs = []
+
+// for (let i = 1; i < 3; i+=0.05){
+//   algs.push({
+//     name: "using first n/4 search where zscore > " + i,
+//     func: zscore_generator(4, i)
+//   })
+// }
 
 function generate_people(n) {
   return Array.from({ length: n }, () => Math.random());
@@ -154,7 +167,7 @@ function log(t) {
 }
 
 data = JSON.parse(fs.readFileSync('./db.json', {encoding:'utf8', flag:'r'}));
-let interviewees = 100
+let interviewees = 50
 let rounds = 10000
 let config = `${interviewees};${rounds}`
 let usecache = !process.argv.includes("nocache")
