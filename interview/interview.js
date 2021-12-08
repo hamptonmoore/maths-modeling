@@ -157,6 +157,7 @@ data = JSON.parse(fs.readFileSync('./db.json', {encoding:'utf8', flag:'r'}));
 let interviewees = 100
 let rounds = 10000
 let config = `${interviewees};${rounds}`
+let usecache = !process.argv.includes("nocache")
 let max = null
 for (let algo of algs) {
   if (data[algo.name] == undefined) {
@@ -168,7 +169,7 @@ for (let algo of algs) {
     }
   }
   let alg = data[algo.name]
-  if (alg.datasets[config] == undefined) {
+  if (alg.datasets[config] == undefined || usecache == false) {
     let succrate = evaluate(interviewees, rounds, algo.func)
     log(`${alg.name} had a success rate of ${succrate*100}%`);
     alg.datasets[config] = succrate
