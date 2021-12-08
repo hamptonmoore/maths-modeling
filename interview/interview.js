@@ -195,6 +195,22 @@ for (let algo of algs) {
   }
 }
 
-console.log(`\n-------------\nBest Algorithm: ${max.name}\nSuccess Rate: ${max.datasets[config]}\n-------------\n`)
+console.log(`\n-------------\nBest Algorithm: ${max.name}\nSuccess Rate: ${max.datasets[config]}\n`)
+
+// Nows lets find the best ever for this config
+
+max = null
+for (let a in data){
+  let alg = data[a]
+  if (alg.datasets[config] == undefined){
+    continue
+  }
+  if (max == null || max.datasets[config] < alg.datasets[config]){
+    max = alg
+  }
+}
+
+console.log(`Best EVER Algorithm: ${max.name}\nSuccess Rate: ${max.datasets[config]}\n-------------\n`)
+
 
 fs.writeFileSync("./db.json", JSON.stringify(data, null, 4))
