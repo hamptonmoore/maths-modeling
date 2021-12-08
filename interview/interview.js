@@ -2,6 +2,24 @@
   Prompt: Select the likely to be highest number in a list without seeing the numbers after it.
 */
 
+var fs = require("fs");
+
+let zScoreGenerator = (part, zscore)=> {
+  return (people) => {
+    let split = Math.floor(people.length/part)
+    let mean = get_mean(people.slice(0, split))
+    let std = get_std(people.slice(0, split))
+    for (let i = split; i < people.length; i++){
+      if ((people[i]-mean)/std >= zscore){
+        return people[i];
+      }
+      if (i == people.length-1){
+        return people[i]
+      }
+    }
+  }
+}
+
 let algs = [
   {
     name: "select first",
@@ -64,20 +82,44 @@ let algs = [
     },
   },
   {
+    name: "using first n/2 search where zscore > 1.75",
+    func: zScoreGenerator(2, 1.75)
+  },
+  {
+    name: "using first n/2 search where zscore > 1.6",
+    func: zScoreGenerator(2, 1.6)
+  },
+  {
     name: "using first n/2 search where zscore > 1.5",
-    func: (people) => {
-      let split = Math.floor(people.length/2)
-      let mean = get_mean(people.slice(0, split))
-      let std = get_std(people.slice(0, split))
-      for (let i = split; i < people.length; i++){
-        if ((people[i]-mean)/std >= 1.5){
-          return people[i];
-        }
-        if (i == people.length-1){
-          return people[i]
-        }
-      }
-    },
+    func: zScoreGenerator(2, 1.5)
+  },
+  {
+    name: "using first n/2 search where zscore > 1.4",
+    func: zScoreGenerator(2, 1.4)
+  },
+  {
+    name: "using first n/2 search where zscore > 1.25",
+    func: zScoreGenerator(2, 1.25)
+  },
+  {
+    name: "using first n/4 search where zscore > 1.4",
+    func: zScoreGenerator(4, 1.4)
+  },
+  {
+    name: "using first n/4 search where zscore > 1.45",
+    func: zScoreGenerator(4, 1.45)
+  },
+  {
+    name: "using first n/4 search where zscore > 1.5",
+    func: zScoreGenerator(4, 1.5)
+  },
+  {
+    name: "using first n/4 search where zscore > 1.55",
+    func: zScoreGenerator(4, 1.55)
+  },
+  {
+    name: "using first n/4 search where zscore > 1.6",
+    func: zScoreGenerator(4, 1.6)
   },
 ];
 
@@ -111,6 +153,26 @@ function log(t) {
   console.log(`${t}`);
 }
 
-for (let alg of algs) {
-  log(`${alg.name} had a success rate of ${evaluate(50, 10000, alg.func)*100}%`);
+data = JSON.parse(fs.readFileSync('./db.json', {encoding:'utf8', flag:'r'}));
+let interviewees = 50
+let rounds = 10000
+let config = `${interviewees};${rounds}`
+for (let algo of algs) {
+  if (data[algo.name] == undefined) {
+    data[algo.name] = {
+      name: algo.name,
+      datasets: {
+
+      }
+    }
+  }
+  let alg = data[algo.name]
+  if (alg.datasets[config] == undefined) {
+    let succrate = evaluate(interviewees, rounds, algo.func)
+    log(`${alg.name} had a success rate of ${succrate*100}%`);
+    alg.datasets[config] = succrate
+  } else {
+    log(`${alg.name} cached success rate of ${alg.datasets[config]*100}%`)
+  }
 }
+fs.writeFileSync("./db.json", JSON.stringify(data, null, 4))

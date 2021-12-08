@@ -1,0 +1,98 @@
+{
+    "select first": {
+        "name": "select first",
+        "datasets": {
+            "50;10000": 0.0202
+        }
+    },
+    "select second": {
+        "name": "select second",
+        "datasets": {
+            "50;10000": 0.0202
+        }
+    },
+    "select last": {
+        "name": "select last",
+        "datasets": {
+            "50;10000": 0.0185
+        }
+    },
+    "using first 1 search where i > max": {
+        "name": "using first 1 search where i > max",
+        "datasets": {
+            "50;10000": 0.0898
+        }
+    },
+    "using first 2 search where i > max": {
+        "name": "using first 2 search where i > max",
+        "datasets": {
+            "50;10000": 0.1428
+        }
+    },
+    "using first n/2 search where i > max": {
+        "name": "using first n/2 search where i > max",
+        "datasets": {
+            "50;10000": 0.3506
+        }
+    },
+    "using first n/2 search where zscore > 1.75": {
+        "name": "using first n/2 search where zscore > 1.75",
+        "datasets": {
+            "50;10000": 0.1609
+        }
+    },
+    "using first n/2 search where zscore > 1.6": {
+        "name": "using first n/2 search where zscore > 1.6",
+        "datasets": {
+            "50;10000": 0.1976
+        }
+    },
+    "using first n/2 search where zscore > 1.5": {
+        "name": "using first n/2 search where zscore > 1.5",
+        "datasets": {
+            "50;10000": 0.1987
+        }
+    },
+    "using first n/2 search where zscore > 1.4": {
+        "name": "using first n/2 search where zscore > 1.4",
+        "datasets": {
+            "50;10000": 0.187
+        }
+    },
+    "using first n/2 search where zscore > 1.25": {
+        "name": "using first n/2 search where zscore > 1.25",
+        "datasets": {
+            "50;10000": 0.1549
+        }
+    },
+    "using first n/4 search where zscore > 1.4": {
+        "name": "using first n/4 search where zscore > 1.4",
+        "datasets": {
+            "50;10000": 0.1883
+        }
+    },
+    "using first n/4 search where zscore > 1.45": {
+        "name": "using first n/4 search where zscore > 1.45",
+        "datasets": {
+            "50;10000": 0.1965
+        }
+    },
+    "using first n/4 search where zscore > 1.5": {
+        "name": "using first n/4 search where zscore > 1.5",
+        "datasets": {
+            "50;10000": 0.2036
+        }
+    },
+    "using first n/4 search where zscore > 1.55": {
+        "name": "using first n/4 search where zscore > 1.55",
+        "datasets": {
+            "50;10000": 0.1971
+        }
+    },
+    "using first n/4 search where zscore > 1.6": {
+        "name": "using first n/4 search where zscore > 1.6",
+        "datasets": {
+            "50;10000": 0.1955
+        }
+    }
+}
