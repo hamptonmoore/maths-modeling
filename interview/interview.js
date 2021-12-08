@@ -4,7 +4,7 @@
 
 var fs = require("fs");
 
-let zScoreGenerator = (part, zscore)=> {
+let zscore_generator = (part, zscore)=> {
   return (people) => {
     let split = Math.floor(people.length/part)
     let mean = get_mean(people.slice(0, split))
@@ -83,43 +83,43 @@ let algs = [
   },
   {
     name: "using first n/2 search where zscore > 1.75",
-    func: zScoreGenerator(2, 1.75)
+    func: zscore_generator(2, 1.75)
   },
   {
     name: "using first n/2 search where zscore > 1.6",
-    func: zScoreGenerator(2, 1.6)
+    func: zscore_generator(2, 1.6)
   },
   {
     name: "using first n/2 search where zscore > 1.5",
-    func: zScoreGenerator(2, 1.5)
+    func: zscore_generator(2, 1.5)
   },
   {
     name: "using first n/2 search where zscore > 1.4",
-    func: zScoreGenerator(2, 1.4)
+    func: zscore_generator(2, 1.4)
   },
   {
     name: "using first n/2 search where zscore > 1.25",
-    func: zScoreGenerator(2, 1.25)
+    func: zscore_generator(2, 1.25)
   },
   {
     name: "using first n/4 search where zscore > 1.4",
-    func: zScoreGenerator(4, 1.4)
+    func: zscore_generator(4, 1.4)
   },
   {
     name: "using first n/4 search where zscore > 1.45",
-    func: zScoreGenerator(4, 1.45)
+    func: zscore_generator(4, 1.45)
   },
   {
     name: "using first n/4 search where zscore > 1.5",
-    func: zScoreGenerator(4, 1.5)
+    func: zscore_generator(4, 1.5)
   },
   {
     name: "using first n/4 search where zscore > 1.55",
-    func: zScoreGenerator(4, 1.55)
+    func: zscore_generator(4, 1.55)
   },
   {
     name: "using first n/4 search where zscore > 1.6",
-    func: zScoreGenerator(4, 1.6)
+    func: zscore_generator(4, 1.6)
   },
 ];
 
