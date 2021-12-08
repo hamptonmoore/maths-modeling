@@ -127,26 +127,27 @@ let algs = [
   },
 ];
 
-
 // algs = []
 
 //Brute force
-for (let i = 0.01; i < 1; i+=0.01){
-  algs.push({
-    name: `using first ${i}n search where i > max`,
-    func: skip_generator(interviewees * i)
-  },)
-}
+// for (let i = 0.01; i < 1; i+=0.01){
+//   algs.push({
+//     name: `using first ${i}n search where i > max`,
+//     func: skip_generator(interviewees * i)
+//   },)
+// }
 
+// algs = []
 
 // Normal
-for (let i = 1; i < 3; i+=0.05){
-  algs.push({
-    name: "using first n*0.4 search where zscore > " + i,
-    func: zscore_generator(0.4, i)
-  })
-}
-
+// for (let j = 0.05; j < 1; j+=0.05){
+//   for (let i = 1; i < 2.5; i+=0.05){
+//     algs.push({
+//       name: `using first n*${j} search where zscore > ${i}`,
+//       func: zscore_generator(j, i)
+//     })
+//   }
+// }
 function generate_people(n) {
   return Array.from({ length: n }, () => Math.random());
 }
@@ -204,7 +205,7 @@ for (let algo of algs) {
   }
 }
 
-console.log(`\n-------------\nBest Algorithm: ${max.name}\nSuccess Rate: ${max.datasets[config]}\n`)
+console.log(`\n-------------\nBest Algorithm: ${max.name}\nSuccess Rate: ${max.datasets[config]}\n-------`)
 
 // Nows lets find the best ever for this config
 
