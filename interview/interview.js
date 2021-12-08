@@ -3,6 +3,8 @@
 */
 
 var fs = require("fs");
+let interviewees = 50
+let rounds = 10000
 
 let zscore_generator = (part, zscore)=> {
   return (people) => {
@@ -11,6 +13,21 @@ let zscore_generator = (part, zscore)=> {
     let std = get_std(people.slice(0, split))
     for (let i = split; i < people.length; i++){
       if ((people[i]-mean)/std >= zscore){
+        return people[i];
+      }
+      if (i == people.length-1){
+        return people[i]
+      }
+    }
+  }
+}
+
+let skip_generator = (skip)=>{
+  return (people) => {
+    let split = Math.floor(skip)
+    let max = Math.max(...people.slice(0,split))
+    for (let i = split; i < people.length; i++){
+      if (people[i] > max){
         return people[i];
       }
       if (i == people.length-1){
@@ -54,32 +71,15 @@ let algs = [
   },
   {
     name: "using first 2 search where i > max",
-    func: (people) => {
-      let max = Math.max(...people.slice(0,2))
-      for (let i = 2; i < people.length; i++){
-        if (people[i] > max){
-          return people[i];
-        }
-        if (i == people.length-1){
-          return people[i]
-        }
-      }
-    },
+    func: skip_generator(2)
   },
   {
     name: "using first n/2 search where i > max",
-    func: (people) => {
-      let split = Math.floor(people.length/2)
-      let max = Math.max(...people.slice(0,split))
-      for (let i = split; i < people.length; i++){
-        if (people[i] > max){
-          return people[i];
-        }
-        if (i == people.length-1){
-          return people[i]
-        }
-      }
-    },
+    func: skip_generator(interviewees/2)
+  },
+  {
+    name: "using first 0.4n search where i > max",
+    func: skip_generator(interviewees * 0.4)
   },
   {
     name: "using first n/2 search where zscore > 1.75",
@@ -129,6 +129,27 @@ let algs = [
 
 // algs = []
 
+// Brute force
+// for (let i = 1; i < interviewees-1; i++){
+//   algs.push({
+//     name: `using first ${i} search where i > max`,
+//     func: (people) => {
+//       let split = i
+//       let max = Math.max(...people.slice(0,split))
+//       for (let i = split; i < people.length; i++){
+//         if (people[i] > max){
+//           return people[i];
+//         }
+//         if (i == people.length-1){
+//           return people[i]
+//         }
+//       }
+//     },
+//   })
+// }
+
+
+// Normal
 // for (let i = 1; i < 3; i+=0.05){
 //   algs.push({
 //     name: "using first n/4 search where zscore > " + i,
@@ -167,8 +188,6 @@ function log(t) {
 }
 
 data = JSON.parse(fs.readFileSync('./db.json', {encoding:'utf8', flag:'r'}));
-let interviewees = 50
-let rounds = 10000
 let config = `${interviewees};${rounds}`
 let usecache = !process.argv.includes("nocache")
 let max = null
