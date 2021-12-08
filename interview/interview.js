@@ -8,7 +8,7 @@ let rounds = 10000
 
 let zscore_generator = (part, zscore)=> {
   return (people) => {
-    let split = Math.floor(people.length/part)
+    let split = Math.floor(people.length * part)
     let mean = get_mean(people.slice(0, split))
     let std = get_std(people.slice(0, split))
     for (let i = split; i < people.length; i++){
@@ -83,79 +83,69 @@ let algs = [
   },
   {
     name: "using first n/2 search where zscore > 1.75",
-    func: zscore_generator(2, 1.75)
+    func: zscore_generator(0.5, 1.75)
   },
   {
     name: "using first n/2 search where zscore > 1.6",
-    func: zscore_generator(2, 1.6)
+    func: zscore_generator(0.5, 1.6)
   },
   {
     name: "using first n/2 search where zscore > 1.5",
-    func: zscore_generator(2, 1.5)
+    func: zscore_generator(0.5, 1.5)
   },
   {
     name: "using first n/2 search where zscore > 1.4",
-    func: zscore_generator(2, 1.4)
+    func: zscore_generator(0.5, 1.4)
   },
   {
     name: "using first n/2 search where zscore > 1.25",
-    func: zscore_generator(2, 1.25)
+    func: zscore_generator(0.5, 1.25)
   },
   {
     name: "using first n/4 search where zscore > 1.4",
-    func: zscore_generator(4, 1.4)
+    func: zscore_generator(0.25, 1.4)
   },
   {
     name: "using first n/4 search where zscore > 1.45",
-    func: zscore_generator(4, 1.45)
+    func: zscore_generator(0.25, 1.45)
   },
   {
     name: "using first n/4 search where zscore > 1.5",
-    func: zscore_generator(4, 1.5)
+    func: zscore_generator(0.25, 1.5)
   },
   {
     name: "using first n/4 search where zscore > 1.55",
-    func: zscore_generator(4, 1.55)
+    func: zscore_generator(0.25, 1.55)
   },
   {
     name: "using first n/4 search where zscore > 1.6",
-    func: zscore_generator(4, 1.6)
+    func: zscore_generator(0.25, 1.6)
   },
   {
     name: "using first n/10 search where zscore > 2",
-    func: zscore_generator(10, 2)
+    func: zscore_generator(0.1, 2)
   },
 ];
 
+
 // algs = []
 
-// Brute force
-// for (let i = 1; i < interviewees-1; i++){
-//   algs.push({
-//     name: `using first ${i} search where i > max`,
-//     func: (people) => {
-//       let split = i
-//       let max = Math.max(...people.slice(0,split))
-//       for (let i = split; i < people.length; i++){
-//         if (people[i] > max){
-//           return people[i];
-//         }
-//         if (i == people.length-1){
-//           return people[i]
-//         }
-//       }
-//     },
-//   })
-// }
+//Brute force
+for (let i = 0.01; i < 1; i+=0.01){
+  algs.push({
+    name: `using first ${i}n search where i > max`,
+    func: skip_generator(interviewees * i)
+  },)
+}
 
 
 // Normal
-// for (let i = 1; i < 3; i+=0.05){
-//   algs.push({
-//     name: "using first n/4 search where zscore > " + i,
-//     func: zscore_generator(4, i)
-//   })
-// }
+for (let i = 1; i < 3; i+=0.05){
+  algs.push({
+    name: "using first n*0.4 search where zscore > " + i,
+    func: zscore_generator(0.4, i)
+  })
+}
 
 function generate_people(n) {
   return Array.from({ length: n }, () => Math.random());
