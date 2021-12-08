@@ -108,7 +108,7 @@ function evaluate(n, rounds, fun) {
 }
 
 function log(t) {
-  document.write(`${t}</br>`);
+  console.log(`${t}`);
 }
 
 for (let alg of algs) {
