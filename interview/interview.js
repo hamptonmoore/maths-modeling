@@ -134,19 +134,19 @@ let algs = [
 
 // Normal
 for (let j = 0.05; j < 1; j+=0.05){
-  for (let i = 0; i < 1.5; i+=0.05){
+  for (let i = 0; i < 2.5; i+=0.05){
     algs.push({
-      name: `using first n*${j} search where zscore > ${i}; adaptive collins`,
+      name: `using first n*${j.toFixed(2)} search where zscore > ${i.toFixed(2)}; adaptive collins`,
       func: zscore_adaptive_collins_generator(j, i)
     })
-    algs.push({
-      name: `using first n*${j} search where zscore > ${i}; adaptive`,
-      func: zscore_adaptive_generator(j, i)
-    })
-    algs.push({
-      name: `using first n*${j} search where zscore > ${i}`,
-      func: zscore_generator(j, i)
-    })
+    // algs.push({
+    //   name: `using first n*${j.toFixed(2)} search where zscore > ${i.toFixed(2)}; adaptive`,
+    //   func: zscore_adaptive_generator(j, i)
+    // })
+    // algs.push({
+    //   name: `using first n*${j.toFixed(2)} search where zscore > ${i.toFixed(2)}`,
+    //   func: zscore_generator(j, i)
+    // })
   }
 }
 function generate_people(n) {
