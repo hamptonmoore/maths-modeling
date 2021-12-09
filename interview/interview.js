@@ -22,6 +22,43 @@ let zscore_generator = (part, zscore)=> {
   }
 }
 
+let zscore_adaptive_generator = (part, zscore)=> {
+  return (people) => {
+    let split = Math.floor(people.length * part)
+    for (let i = split; i < people.length; i++){
+      let mean = get_mean(people.slice(0, i))
+      let std = get_std(people.slice(0, i))
+      if ((people[i]-mean)/std >= zscore){
+        return people[i];
+      }
+      if (i == people.length-1){
+        return people[i]
+      }
+    }
+  }
+}
+
+let zscore_adaptive_collins_generator = (part, zscore)=> {
+  return (people) => {
+    let split = Math.floor(people.length * part)
+    let max = Math.max(...people.slice(0, split))
+    for (let i = split; i < people.length; i++){
+      if (people[i] < max){
+        continue;
+      }
+      max = Math.max(...people.slice(0, split+1))
+      let mean = get_mean(people.slice(0, i))
+      let std = get_std(people.slice(0, i))
+      if ((people[i]-mean)/std >= zscore){
+        return people[i];
+      }
+      if (i == people.length-1){
+        return people[i]
+      }
+    }
+  }
+}
+
 let skip_generator = (skip)=>{
   return (people) => {
     let split = Math.floor(skip)
@@ -81,50 +118,6 @@ let algs = [
     name: "using first 0.4n search where i > max",
     func: skip_generator(interviewees * 0.4)
   },
-  {
-    name: "using first n/2 search where zscore > 1.75",
-    func: zscore_generator(0.5, 1.75)
-  },
-  {
-    name: "using first n/2 search where zscore > 1.6",
-    func: zscore_generator(0.5, 1.6)
-  },
-  {
-    name: "using first n/2 search where zscore > 1.5",
-    func: zscore_generator(0.5, 1.5)
-  },
-  {
-    name: "using first n/2 search where zscore > 1.4",
-    func: zscore_generator(0.5, 1.4)
-  },
-  {
-    name: "using first n/2 search where zscore > 1.25",
-    func: zscore_generator(0.5, 1.25)
-  },
-  {
-    name: "using first n/4 search where zscore > 1.4",
-    func: zscore_generator(0.25, 1.4)
-  },
-  {
-    name: "using first n/4 search where zscore > 1.45",
-    func: zscore_generator(0.25, 1.45)
-  },
-  {
-    name: "using first n/4 search where zscore > 1.5",
-    func: zscore_generator(0.25, 1.5)
-  },
-  {
-    name: "using first n/4 search where zscore > 1.55",
-    func: zscore_generator(0.25, 1.55)
-  },
-  {
-    name: "using first n/4 search where zscore > 1.6",
-    func: zscore_generator(0.25, 1.6)
-  },
-  {
-    name: "using first n/10 search where zscore > 2",
-    func: zscore_generator(0.1, 2)
-  },
 ];
 
 // algs = []
@@ -140,14 +133,22 @@ let algs = [
 // algs = []
 
 // Normal
-// for (let j = 0.05; j < 1; j+=0.05){
-//   for (let i = 1; i < 2.5; i+=0.05){
-//     algs.push({
-//       name: `using first n*${j} search where zscore > ${i}`,
-//       func: zscore_generator(j, i)
-//     })
-//   }
-// }
+for (let j = 0.05; j < 1; j+=0.05){
+  for (let i = 0; i < 1.5; i+=0.05){
+    algs.push({
+      name: `using first n*${j} search where zscore > ${i}; adaptive collins`,
+      func: zscore_adaptive_collins_generator(j, i)
+    })
+    algs.push({
+      name: `using first n*${j} search where zscore > ${i}; adaptive`,
+      func: zscore_adaptive_generator(j, i)
+    })
+    algs.push({
+      name: `using first n*${j} search where zscore > ${i}`,
+      func: zscore_generator(j, i)
+    })
+  }
+}
 function generate_people(n) {
   return Array.from({ length: n }, () => Math.random());
 }
