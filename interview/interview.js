@@ -82,7 +82,7 @@ let skip_max_skip_generator = (skip, max_skip)=>{
     for (let i = split; i < people.length; i++){
       if (people[i] > max){
         maxed++;
-        if (maxed >= max_skip){
+        if (maxed > max_skip){
           return people[i];
         }
         max = people[i]
@@ -162,22 +162,22 @@ let algs = [
 // algs = []
 
 // Normal
-for (let j = 0.05; j < 1; j+=0.05){
-  for (let i = 0; i < 2.5; i+=0.05){
-    algs.push({
-      name: `using first n*${j.toFixed(2)} search where zscore > ${i.toFixed(2)}; adaptive collins`,
-      func: zscore_adaptive_collins_generator(j, i)
-    })
-    algs.push({
-      name: `using first n*${j.toFixed(2)} search where zscore > ${i.toFixed(2)}; adaptive`,
-      func: zscore_adaptive_generator(j, i)
-    })
-    algs.push({
-      name: `using first n*${j.toFixed(2)} search where zscore > ${i.toFixed(2)}`,
-      func: zscore_generator(j, i)
-    })
-  }
-}
+// for (let j = 0.05; j < 1; j+=0.05){
+//   for (let i = 0; i < 2.5; i+=0.05){
+//     algs.push({
+//       name: `using first n*${j.toFixed(2)} search where zscore > ${i.toFixed(2)}; adaptive collins`,
+//       func: zscore_adaptive_collins_generator(j, i)
+//     })
+//     algs.push({
+//       name: `using first n*${j.toFixed(2)} search where zscore > ${i.toFixed(2)}; adaptive`,
+//       func: zscore_adaptive_generator(j, i)
+//     })
+//     algs.push({
+//       name: `using first n*${j.toFixed(2)} search where zscore > ${i.toFixed(2)}`,
+//       func: zscore_generator(j, i)
+//     })
+//   }
+// }
 function generate_people(n) {
   return Array.from({ length: n }, () => Math.random());
 }
