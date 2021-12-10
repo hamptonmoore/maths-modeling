@@ -1,5 +1,6 @@
 const { createCanvas, loadImage } = require('canvas')
 const fs = require('fs')
+const { createContext } = require('vm')
 const height = 19
 const width = 2.50/0.05
 const scale = 32
@@ -30,8 +31,8 @@ for (let i = 0; i < width; i++){
 for (let i = 0; i < width; i+=4){
     ctx.fillStyle = `black`;
     ctx.font = '16px Impact'
-    ctx.fillText((0 + (0.05 * i)).toFixed(2).toString(), (i+xoffset)*scale + 5, (height+0.5)*scale)
-    ctx.fillRect((i+xoffset)*scale, (height)*scale, 5, scale)
+    ctx.fillText((0 + (0.05 * i)).toFixed(2).toString(), (i+xoffset)*scale + 10, (height+0.5)*scale)
+    ctx.fillRect((i+xoffset)*scale, (height)*scale, 5, scale/2)
 }
 
 for (let j = 0; j < height; j+=2){
@@ -40,6 +41,15 @@ for (let j = 0; j < height; j+=2){
     ctx.textAlign = 'right';
     ctx.fillText((0.05 + (0.05 * j)).toFixed(2).toString(), xoffset*scale, ((height-j-0.25) *scale))
     ctx.fillRect((xoffset-1)*scale, (j+1)*scale, scale, 5)
+}
+
+for (let i = 0; i <= 0.4; i+=0.1){
+    let color = Math.round(i * 255 * 2.5)
+    let offset = 35
+    ctx.fillStyle = `hsl(${color}, 50%, 50%)`;
+    ctx.fillRect(((i*10*3)+xoffset+offset)*scale, (height+1)*scale, scale, scale)
+    ctx.textAlign = 'left';
+    ctx.fillText((i*100).toFixed(0).toString()+"%", ((i*10*3)+xoffset+1.2+offset)*scale, (height+1.7)*scale)
 }
 
 const out = fs.createWriteStream(__dirname + '/output.png')
