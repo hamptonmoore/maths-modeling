@@ -20,18 +20,18 @@ for (let i = 0; i < width; i++){
         if (data[name] == undefined) {
             console.log("So help me lord")
         } else {
-            let color = Math.round(data[name].datasets["50;10000"] * 360 * 2.5)
+            let color = Math.round(data[name].datasets["50;10000"] * 255 * 2.5)
             ctx.fillStyle = `hsl(${color}, 50%, 50%)`;
             ctx.fillRect(((i)+xoffset)*scale, (height-j-1)*scale, scale, scale)
         }
     }
 }
 
-for (let i = 0; i < width; i+=1){
+for (let i = 0; i < width; i+=2){
     ctx.fillStyle = `black`;
     ctx.font = '16px Impact'
-    ctx.fillText((0 + (0.05 * i)).toFixed(2).toString(), (i+xoffset)*scale + 5, (height+0.5)*scale)
-    ctx.fillRect((i+xoffset)*scale, (height)*scale, 5, scale)
+    ctx.fillText((0 + (0.05 * i)).toFixed(2).toString(), (i+xoffset)*scale + 8, (height+0.4)*scale)
+    ctx.fillRect((i+xoffset)*scale, (height)*scale, 5, scale/2)
 }
 
 for (let j = 0; j < height; j+=1){
@@ -40,6 +40,15 @@ for (let j = 0; j < height; j+=1){
     ctx.textAlign = 'right';
     ctx.fillText(((j)).toFixed(2).toString(), xoffset*scale, ((height-j-0.25) *scale))
     ctx.fillRect((xoffset-1)*scale, (j+1)*scale, scale, 5)
+}
+
+for (let i = 0; i <= 0.4; i+=0.1){
+    let color = Math.round(i * 255 * 2.5)
+    let offset = 10
+    ctx.fillStyle = `hsl(${color}, 50%, 50%)`;
+    ctx.fillRect(((i*10*2)+xoffset+offset)*scale, (height+1)*scale, scale, scale)
+    ctx.textAlign = 'left';
+    ctx.fillText((i*100).toFixed(0).toString()+"%", ((i*10*2)+xoffset+1.1+offset)*scale, (height+1.6)*scale)
 }
 
 const out = fs.createWriteStream(__dirname + '/output.png')
