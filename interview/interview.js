@@ -150,14 +150,14 @@ let algs = [
 //   },)
 // }
 
-// for (let j = 0; j < 11; j++){
-//   for (let i = 0; i < 1; i+=0.02){
-//     algs.push({
-//       name: `using first ${i.toFixed(2)}n search where i > max skip first ${j.toFixed(2)} maxes`,
-//       func: skip_max_skip_generator(interviewees * i, j)
-//     },)
-//   }
-// }
+for (let j = 0; j < 11; j++){
+  for (let i = 0; i < 1; i+=0.02){
+    algs.push({
+      name: `using first ${i.toFixed(2)}n search where i > max skip first ${j.toFixed(2)} maxes`,
+      func: skip_max_skip_generator(interviewees * i, j)
+    },)
+  }
+}
 
 // algs = []
 
@@ -182,20 +182,24 @@ function generate_people(n) {
   return Array.from({ length: n }, () => Math.random());
 }
 
+function generate_normal_people(n) {
+  let np = 50
+  return Array.from({ length: n }, () => {return generate_people(np).reduce((a,b)=>a+b)/np});
+}
+
 function get_mean(ns){
   return ns.reduce((a, b) => a + b) / ns.length;
 }
 
 function get_std(ns){
   let mean = get_mean(ns);
-
-    return Math.sqrt(ns.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / ns.length)
+  return Math.sqrt(ns.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / ns.length)
 }
 
 function evaluate(n, rounds, fun) {
   let succs = 0;
   for (let round = 0; round < rounds; round++) {
-    let people = generate_people(n);
+    let people = generate_normal_people(n);
     if (fun(people) == Math.max(...people)) {
       succs++;
     }
