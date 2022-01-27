@@ -1,7 +1,12 @@
 const prompt = require('prompt-sync')();
 
-//const poly = prompt('Enter your polynomial (please use spaces between terms)? ');
-const poly = "4x^4 + 2x^3 + 9x^2 + 10x + -10";
+let poly;
+if (process.env.FUNCTION){
+    poly = process.env.FUNCTION
+} else {
+    poly = prompt('Enter your polynomial (please use spaces between terms)? ');
+}
+
 const coes = poly.split("x")
     .map((i)=> {
         i=i.split(" ");
@@ -26,17 +31,19 @@ while (distance > 0.01 || distance == null) {
     let slope = calcY(x, dcoes);
     distance = Math.abs(y);
     let newx = x - (y/slope)
-    console.log(`Tested x=${x}, got y=${y}, new x = ${newx}, distance = ${distance}`);
+    console.log(`Tested x=${x}, got y=${y}, with a slope = ${slope}, new x = ${newx}`);
     x=newx;
 }
 
 console.log(`Final x = ${x} where y = ${y}`)
 
+function deriv(coes){
+    
+}
 
 function calcY(x, coes){
     return coes.map((i, pos, a)=> {
         let power = (a.length-1) - pos;
-
         return i * Math.pow(x, power);
     })
     .reduce((a, b)=> a+b);
